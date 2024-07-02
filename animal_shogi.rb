@@ -1,25 +1,23 @@
 # frozen_string_literal: true
 
-require_relative './lib/board'
+require_relative 'board'
 
 class AnimalShogi
-  include Board
-
   FIRST_PLAYER = 1
   SECOND_PLAYER = 2
 
   def initialize
     @current_player = FIRST_PLAYER
-    @board = build_board
+    @board = Board.new
   end
 
   def run
     loop do
-      display_board(@board)
+      @board.display
       print @current_player == FIRST_PLAYER ? '先手: 入力してください > ' : '後手: 入力してください > '
       command = gets.chomp.split(',')
 
-      if move_piece(@board, command[0], command[1])
+      if @board.move_piece(command[0], command[1])
         @current_player = switch_player
       else
         puts '配置失敗、ターン据え置き'
