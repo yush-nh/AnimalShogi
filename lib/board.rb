@@ -36,6 +36,9 @@ module Board
   def move_piece(board, from, to)
     pos_from = Position.new(from)
     pos_to = Position.new(to)
+
+    return false if pos_to.out_of_board?
+
     board[pos_to.col][pos_to.row] = pos_from.animal
     board[pos_from.col][pos_from.row] = BLANK_CELL
 

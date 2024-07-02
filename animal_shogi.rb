@@ -18,9 +18,12 @@ class AnimalShogi
       display_board(@board)
       print @current_player == FIRST_PLAYER ? '先手: 入力してください > ' : '後手: 入力してください > '
       command = gets.chomp.split(',')
-      move_piece(@board, command[0], command[1])
 
-      @current_player = switch_player
+      if move_piece(@board, command[0], command[1])
+        @current_player = switch_player
+      else
+        puts '配置失敗、ターン据え置き'
+      end
     end
   end
 

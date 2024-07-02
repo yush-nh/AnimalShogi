@@ -11,4 +11,8 @@ class Position
     @col = COL.index(command[1])
     @animal = command[2]
   end
+
+  def out_of_board?
+    !((0..3).cover?(@col) && (0..2).cover?(@row))
+  end
 end
