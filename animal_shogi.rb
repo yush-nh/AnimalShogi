@@ -17,7 +17,8 @@ class AnimalShogi
     loop do
       display_board(@board)
       print @current_player == FIRST_PLAYER ? '先手: 入力してください > ' : '後手: 入力してください > '
-      gets.chomp
+      command = gets.chomp.split(',')
+      move_piece(@board, command[0], command[1])
 
       @current_player = switch_player
     end

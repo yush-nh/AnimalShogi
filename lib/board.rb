@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'debug'
+require_relative './position'
+
 module Board
   BLANK_CELL = ' '
 
@@ -28,5 +31,14 @@ module Board
       print "\n"
     end
     puts '先手:'
+  end
+
+  def move_piece(board, from, to)
+    pos_from = Position.new(from)
+    pos_to = Position.new(to)
+    board[pos_to.col][pos_to.row] = pos_from.animal
+    board[pos_from.col][pos_from.row] = BLANK_CELL
+
+    true
   end
 end
