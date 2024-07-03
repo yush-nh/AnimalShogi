@@ -41,6 +41,12 @@ class Board
     true
   end
 
+  def finished?
+    !(@board.flatten.include?('l') && @board.flatten.include?('L'))
+  end
+
+  private
+
   def valid_move?(from, to)
     piece = from.animal
     dx = to.col - from.col
@@ -63,9 +69,5 @@ class Board
 
   def add_piece_to_player(to, player)
     player.pieces << @board[to.col][to.row].swapcase
-  end
-
-  def finished?
-    !(@board.flatten.include?('l') && @board.flatten.include?('L'))
   end
 end
