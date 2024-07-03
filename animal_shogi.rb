@@ -13,7 +13,7 @@ class AnimalShogi
 
   def run
     loop do
-      @board.display
+      display_view
       print @current_player == @first_player ? '先手: 入力してください > ' : '後手: 入力してください > '
       command = gets.chomp.split(',')
 
@@ -36,6 +36,18 @@ class AnimalShogi
   end
 
   private
+
+  def display_view
+    display_player(@second_player)
+    @board.display
+    display_player(@first_player)
+  end
+
+  def display_player(player)
+    print "#{player.role}:"
+    player.pieces.each { |piece| print "#{piece} " }
+    print "\n"
+  end
 
   def switch_player
     @current_player == @first_player ? @second_player : @first_player
