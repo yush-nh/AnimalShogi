@@ -34,7 +34,7 @@ class Board
     return false if pos_to.out_of_board?
     return false unless valid_move?(pos_from, pos_to)
 
-    add_piece_to_player(pos_to, player) unless @board[pos_to.col][pos_to.row].empty?
+    add_piece_to_player(pos_to, player) unless @board[pos_to.col][pos_to.row].strip.empty?
     @board[pos_to.col][pos_to.row] = pos_from.animal
     @board[pos_from.col][pos_from.row] = ' '
 
