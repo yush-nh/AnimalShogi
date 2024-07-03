@@ -3,8 +3,8 @@
 require_relative 'board'
 
 class AnimalShogi
-  FIRST_PLAYER = 1
-  SECOND_PLAYER = 2
+  FIRST_PLAYER = '先手'
+  SECOND_PLAYER = '後手'
 
   def initialize
     @current_player = FIRST_PLAYER
@@ -18,16 +18,16 @@ class AnimalShogi
       command = gets.chomp.split(',')
 
       if @board.move_piece(command[0], command[1])
+        break if @board.finished?
+
         @current_player = switch_player
       else
         puts '配置失敗、ターン据え置き'
       end
-
-      if @board.finished?
-        puts '試合終了'
-        break
-      end
     end
+
+    @board.display
+    puts "ゲーム終了 #{@current_player}の勝利！"
   end
 
   private

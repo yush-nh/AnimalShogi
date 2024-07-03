@@ -16,9 +16,8 @@ class Board
   end
 
   def display
-    puts '後手:'
     puts '   | A | B | C |'
-    
+
     @board.each.with_index(1) do |row, i|
       print " #{i} |"
       row.each do |cell|
@@ -26,7 +25,6 @@ class Board
       end
       print "\n"
     end
-    puts '先手:'
   end
 
   def move_piece(from, to)
@@ -55,7 +53,7 @@ class Board
       'e' => [[-1, -1], [-1, 1], [1, -1], [1, 1]],                                   # ぞう
       'E' => [[-1, -1], [-1, 1], [1, -1], [1, 1]],                                   # ぞう
       'l' => [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]], # ライオン
-      'L' => [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]], # ライオン
+      'L' => [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]  # ライオン
     }
 
     moves = valid_moves[piece] || []
