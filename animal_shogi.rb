@@ -22,6 +22,11 @@ class AnimalShogi
       else
         puts '配置失敗、ターン据え置き'
       end
+
+      if @board.finished?
+        puts '試合終了'
+        break
+      end
     end
   end
 

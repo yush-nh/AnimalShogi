@@ -40,4 +40,8 @@ class Board
 
     true
   end
+
+  def finished?
+    !(@board.flatten.include?('l') && @board.flatten.include?('L'))
+  end
 end
