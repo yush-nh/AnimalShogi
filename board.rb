@@ -34,11 +34,32 @@ class Board
     pos_to = Piece.new(to)
 
     return false if pos_to.out_of_board?
+    return false unless valid_move?(pos_from, pos_to)
 
     @board[pos_to.col][pos_to.row] = pos_from.animal
     @board[pos_from.col][pos_from.row] = ' '
 
     true
+  end
+
+  def valid_move?(from, to)
+    piece = from.animal
+    dx = to.col - from.col
+    dy = to.row - from.row
+
+    valid_moves = {
+      'c' => [[1, 0]],                                                               # ひよこ
+      'C' => [[-1, 0]],                                                              # ひよこ
+      'g' => [[-1, 0], [1, 0], [0, -1], [0, 1]],                                     # きりん
+      'G' => [[-1, 0], [1, 0], [0, -1], [0, 1]],                                     # きりん
+      'e' => [[-1, -1], [-1, 1], [1, -1], [1, 1]],                                   # ぞう
+      'E' => [[-1, -1], [-1, 1], [1, -1], [1, 1]],                                   # ぞう
+      'l' => [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]], # ライオン
+      'L' => [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]], # ライオン
+    }
+
+    moves = valid_moves[piece] || []
+    moves.include?([dx, dy])
   end
 
   def finished?
