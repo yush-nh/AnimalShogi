@@ -22,22 +22,12 @@ class AnimalShogi
         next
       end
 
-      if command.size == 2
-        if @board.move_piece(command[0], command[1], @current_player)
-          break if @board.finished?
+      if handle_piece_action(command)
+        break if @board.finished?
 
-          @current_player = switch_player
-        else
-          puts '配置失敗、ターン据え置き'
-        end
-      elsif command.size == 1
-        if @board.place_piece(command[0], @current_player)
-          break if @board.finished?
-
-          @current_player = switch_player
-        else
-          puts '配置失敗、ターン据え置き'
-        end
+        @current_player = switch_player
+      else
+        puts '配置失敗、ターン据え置き'
       end
     end
 
@@ -57,6 +47,17 @@ class AnimalShogi
     print "#{player.role}:"
     player.pieces.each { |piece| print "#{piece} " }
     print "\n"
+  end
+
+  def handle_piece_action(command)
+    success = false
+    if command.size == 2
+      success = @board.move_piece(command[0], command[1], @current_player)
+    elsif command.size == 1
+      success = @board.place_piece(command[0], @current_player)
+    end
+
+    success
   end
 
   def switch_player
