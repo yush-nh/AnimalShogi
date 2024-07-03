@@ -17,6 +17,11 @@ class AnimalShogi
       print @current_player == FIRST_PLAYER ? '先手: 入力してください > ' : '後手: 入力してください > '
       command = gets.chomp.split(',')
 
+      unless valid_format?(command)
+        puts '入力フォーマットが正しくありません。再度入力してください。'
+        next
+      end
+
       if @board.move_piece(command[0], command[1])
         break if @board.finished?
 
@@ -34,5 +39,10 @@ class AnimalShogi
 
   def switch_player
     @current_player == FIRST_PLAYER ? SECOND_PLAYER : FIRST_PLAYER
+  end
+
+  def valid_format?(command)
+    regexp = /^[A-C][1-4][LGCPElgcpe]$/
+    regexp.match?(command[0]) && regexp.match?(command[1])
   end
 end
