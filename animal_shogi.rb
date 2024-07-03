@@ -22,7 +22,7 @@ class AnimalShogi
         next
       end
 
-      if @board.move_piece(command[0], command[1])
+      if @board.move_piece(command[0], command[1], @current_player)
         break if @board.finished?
 
         @current_player = switch_player
