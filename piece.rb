@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Position
+class Piece
   COL = %w[1 2 3 4].freeze
   ROW = %w[A B C].freeze
 

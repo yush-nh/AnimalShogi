@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './lib/position'
+require_relative 'piece'
 
 class Board
   def initialize
@@ -30,8 +30,8 @@ class Board
   end
 
   def move_piece(from, to)
-    pos_from = Position.new(from)
-    pos_to = Position.new(to)
+    pos_from = Piece.new(from)
+    pos_to = Piece.new(to)
 
     return false if pos_to.out_of_board?
 
