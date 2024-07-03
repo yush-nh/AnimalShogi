@@ -22,12 +22,22 @@ class AnimalShogi
         next
       end
 
-      if @board.move_piece(command[0], command[1], @current_player)
-        break if @board.finished?
+      if command.size == 2
+        if @board.move_piece(command[0], command[1], @current_player)
+          break if @board.finished?
 
-        @current_player = switch_player
-      else
-        puts '配置失敗、ターン据え置き'
+          @current_player = switch_player
+        else
+          puts '配置失敗、ターン据え置き'
+        end
+      elsif command.size == 1
+        if @board.place_piece(command[0], @current_player)
+          break if @board.finished?
+
+          @current_player = switch_player
+        else
+          puts '配置失敗、ターン据え置き'
+        end
       end
     end
 
@@ -55,6 +65,12 @@ class AnimalShogi
 
   def valid_format?(command)
     regexp = /^[A-C][1-4][LGCPElgcpe]$/
-    regexp.match?(command[0]) && regexp.match?(command[1])
+    if command.size == 2
+      regexp.match?(command[0]) && regexp.match?(command[1])
+    elsif command.size == 1
+      regexp.match?(command[0])
+    else
+      false
+    end
   end
 end

@@ -41,6 +41,17 @@ class Board
     true
   end
 
+  def place_piece(to, player)
+    pos_to = Piece.new(to)
+
+    return false if pos_to.out_of_board?
+    return false unless placeable?(pos_to)
+
+    @board[pos_to.col][pos_to.row] = pos_to.animal
+    remove_piece_from_player(pos_to.animal, player)
+    true
+  end
+
   def finished?
     !(@board.flatten.include?('l') && @board.flatten.include?('L'))
   end
@@ -67,7 +78,15 @@ class Board
     moves.include?([dx, dy])
   end
 
+  def placeable?(to)
+    @board[to.col][to.row].strip.empty?
+  end
+
   def add_piece_to_player(to, player)
     player.pieces << @board[to.col][to.row].swapcase
+  end
+
+  def remove_piece_from_player(piece, player)
+    player.pieces.delete(piece)
   end
 end
