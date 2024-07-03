@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
 require_relative 'board'
+require_relative 'player'
 
 class AnimalShogi
-  FIRST_PLAYER = '先手'
-  SECOND_PLAYER = '後手'
-
   def initialize
-    @current_player = FIRST_PLAYER
+    @first_player = Player.new('先手')
+    @second_player = Player.new('後手')
+    @current_player = @first_player
     @board = Board.new
   end
 
   def run
     loop do
       @board.display
-      print @current_player == FIRST_PLAYER ? '先手: 入力してください > ' : '後手: 入力してください > '
+      print @current_player == @first_player ? '先手: 入力してください > ' : '後手: 入力してください > '
       command = gets.chomp.split(',')
 
       unless valid_format?(command)
@@ -22,7 +22,7 @@ class AnimalShogi
         next
       end
 
-      if @board.move_piece(command[0], command[1])
+      if @board.move_piece(command[0], command[1], @current_player)
         break if @board.finished?
 
         @current_player = switch_player
@@ -32,13 +32,13 @@ class AnimalShogi
     end
 
     @board.display
-    puts "ゲーム終了 #{@current_player}の勝利！"
+    puts "ゲーム終了 #{@current_player.role}の勝利！"
   end
 
   private
 
   def switch_player
-    @current_player == FIRST_PLAYER ? SECOND_PLAYER : FIRST_PLAYER
+    @current_player == @first_player ? @second_player : @first_player
   end
 
   def valid_format?(command)
