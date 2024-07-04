@@ -34,8 +34,9 @@ class Board
     return false if pos_to.out_of_board?
     return false unless valid_move?(pos_from, pos_to)
 
+    check_and_evolve_chick(pos_to, player)
     add_piece_to_player(pos_to, player) unless @board[pos_to.col][pos_to.row].strip.empty?
-    @board[pos_to.col][pos_to.row] = pos_from.animal
+    @board[pos_to.col][pos_to.row] = pos_to.animal
     @board[pos_from.col][pos_from.row] = ' '
 
     true
@@ -52,6 +53,7 @@ class Board
       return false
     end
 
+    check_and_evolve_chick(pos_to, player)
     @board[pos_to.col][pos_to.row] = pos_to.animal
     remove_piece_from_player(pos_to.animal, player)
 
@@ -72,8 +74,8 @@ class Board
     valid_moves = {
       'c' => [[1, 0]],                                                               # ひよこ
       'C' => [[-1, 0]],                                                              # ひよこ
-      'p' => [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1]]                     # ニワトリ
-      'P' => [[1, 0], [-1, 0], [0, 1], [0, -1], [-1, 1], [-1, -1]]                   # ニワトリ
+      'p' => [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1]],                    # ニワトリ
+      'P' => [[1, 0], [-1, 0], [0, 1], [0, -1], [-1, 1], [-1, -1]],                  # ニワトリ
       'g' => [[-1, 0], [1, 0], [0, -1], [0, 1]],                                     # きりん
       'G' => [[-1, 0], [1, 0], [0, -1], [0, 1]],                                     # きりん
       'e' => [[-1, -1], [-1, 1], [1, -1], [1, 1]],                                   # ぞう
@@ -96,5 +98,15 @@ class Board
 
   def remove_piece_from_player(piece, player)
     player.pieces.delete(piece)
+  end
+
+  def check_and_evolve_chick(piece, player)
+    if piece.animal == 'C' && piece.col == 0
+      player.pieces.map! { |piece| piece == 'C' ? 'P' : piece }
+      piece.animal = 'P'
+    elsif piece.animal == 'c' && piece.col == 3
+      player.pieces.map! { |piece| piece == 'c' ? 'p' : piece }
+      piece.animal = 'p'
+    end
   end
 end
