@@ -22,7 +22,7 @@ class AnimalShogi
         next
       end
 
-      if @board.move_piece(command[0], command[1], @current_player)
+      if handle_piece_action(command)
         break if @board.finished?
 
         @current_player = switch_player
@@ -49,12 +49,29 @@ class AnimalShogi
     print "\n"
   end
 
+  def handle_piece_action(command)
+    success = false
+    if command.size == 2
+      success = @board.move_piece(command[0], command[1], @current_player)
+    elsif command.size == 1
+      success = @board.place_piece(command[0], @current_player)
+    end
+
+    success
+  end
+
   def switch_player
     @current_player == @first_player ? @second_player : @first_player
   end
 
   def valid_format?(command)
     regexp = /^[A-C][1-4][LGCPElgcpe]$/
-    regexp.match?(command[0]) && regexp.match?(command[1])
+    if command.size == 2
+      regexp.match?(command[0]) && regexp.match?(command[1])
+    elsif command.size == 1
+      regexp.match?(command[0])
+    else
+      false
+    end
   end
 end
