@@ -47,8 +47,14 @@ class Board
     return false if pos_to.out_of_board?
     return false unless placeable?(pos_to)
 
+    unless player.pieces.include?(pos_to.animal)
+      puts '指定した駒を所持していません'
+      return false
+    end
+
     @board[pos_to.col][pos_to.row] = pos_to.animal
     remove_piece_from_player(pos_to.animal, player)
+
     true
   end
 
